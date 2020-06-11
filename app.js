@@ -41,6 +41,7 @@ setInterval(()=>{
             }
         }else{
             flag=true;
+            sendEmail('Testing' ,'same');
             console.log('same');
         }
     });
