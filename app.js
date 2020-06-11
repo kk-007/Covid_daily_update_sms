@@ -19,7 +19,9 @@ let input_email = [
 
 let flag = true;
 console.log('started');
-while(true){
+
+function main(){
+    console.log('in main');
     setTimeout(()=>{
         console.log('Execution in setInterval');
         axios.get('https://api.covid19india.org/districts_daily.json')
@@ -46,6 +48,7 @@ while(true){
                 sendEmail('Testing' ,'same');
                 console.log('same');
             }
+            main();
         });
       })
       .catch(function (error) {
@@ -55,7 +58,7 @@ while(true){
       });
     },5*1000);
 }
-
+main();
 function sendEmail(Title,Body){
     var transporter = nodemailer.createTransport({
         service: 'gmail',
