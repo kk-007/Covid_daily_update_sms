@@ -19,7 +19,7 @@ let input_email = [
 
 let flag = true;
 console.log('started');
-setInterval(()=>{
+setTimeout(()=>{
     console.log('Execution in setInterval');
     axios.get('https://api.covid19india.org/districts_daily.json')
   .then(function (response) {
@@ -52,7 +52,7 @@ setInterval(()=>{
   })
   .finally(function () {
   });
-},60*1000);
+},5*1000);
 
 function sendEmail(Title,Body){
     var transporter = nodemailer.createTransport({
