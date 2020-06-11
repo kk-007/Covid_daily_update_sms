@@ -1,6 +1,5 @@
 const axios = require('axios');
 var nodemailer = require('nodemailer');
-require('dotenv').config();
 
 let input_District = [
     {
@@ -51,7 +50,7 @@ setInterval(()=>{
   })
   .finally(function () {
   });
-},5000);
+},60*1000);
 
 function sendEmail(Title,Body){
     var transporter = nodemailer.createTransport({
