@@ -48,13 +48,13 @@ function main(){
                 sendEmail('Testing' ,'same');
                 console.log('same');
             }
-            main();
         });
       })
       .catch(function (error) {
         console.log(error);
       })
       .finally(function () {
+        main();
       });
     },5*1000);
 }
