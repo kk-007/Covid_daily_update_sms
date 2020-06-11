@@ -1,6 +1,6 @@
 const axios = require('axios');
 var nodemailer = require('nodemailer');
-
+console.log('kk:'+process.env.EMAIL);
 let input_District = [
     {
         state:'Gujarat',
