@@ -45,7 +45,6 @@ function main(){
                 }
             }else{
                 flag=true;
-                sendEmail('Testing' ,'same');
                 console.log('same');
             }
         });
