@@ -34,7 +34,7 @@ function main(){
             let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
             delete data[0].date;
             delete data[1].date;
-            if(!JSON.stringify(data[0])==JSON.stringify(data[1])){
+            if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
                 if(flag){
                     res.active = data[1].active-data[0].active;
                     res.confirmed = data[1].confirmed-data[0].confirmed;
