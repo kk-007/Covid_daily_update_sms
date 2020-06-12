@@ -14,8 +14,7 @@ let input_District = [
 
 let input_email = [
     'kevalnavadiya39@gmail.com',
-    'bhutbhutani39@gmail.com',
-    'ketann09@gmail.com'
+    'bhutbhutani39@gmail.com'
 ]
 
 let flag = true;
@@ -32,7 +31,7 @@ function main(){
         let res={};
     
         await Promise.all(input_District.forEach(async e => {
-            await new Promise(async (resolve,reject)=>{
+            await new Promise((resolve,reject)=>{
               let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
               delete data[0].date;
               delete data[1].date;
@@ -43,7 +42,7 @@ function main(){
                       res.deceased = data[1].deceased-data[0].deceased;
                       res.recovered = data[1].recovered-data[0].recovered;
                       flag=false;
-                      await sendEmail('DATA : '+e.district , JSON.stringify(res));
+                      sendEmail('DATA : '+e.district , JSON.stringify(res));
                   }
               }else{
                   flag=true;
@@ -63,7 +62,6 @@ function main(){
 }
 main();
 function sendEmail(Title,Body){
-    return new Promise((res,rej)=>{
       var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -85,5 +83,4 @@ function sendEmail(Title,Body){
         }
         res(true);
       });
-    })
 }
