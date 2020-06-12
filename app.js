@@ -14,7 +14,8 @@ let input_District = [
 
 let input_email = [
     'kevalnavadiya39@gmail.com',
-    'bhutbhutani39@gmail.com'
+    'bhutbhutani39@gmail.com',
+    'ketann09@gmail.com'
 ]
 
 let flag = true;
