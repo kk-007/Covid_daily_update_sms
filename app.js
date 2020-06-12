@@ -25,13 +25,13 @@ function main(){
     setTimeout(()=>{
         console.log('Execution in setInterval');
         axios.get('https://api.covid19india.org/districts_daily.json')
-      .then(async function (response) {
+      .then(function (response) {
         let yesterday = new Date(Date.now() - 864e5).toISOString().slice(0,10);
         let today = new Date().toISOString().slice(0,10);
         let res={};
     
-        await Promise.all(input_District.forEach(async e => {
-            await new Promise((resolve,reject)=>{
+        input_District.forEach(async e => {
+            await new Promise(async (resolve,reject)=>{
               let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
               delete data[0].date;
               delete data[1].date;
@@ -42,7 +42,7 @@ function main(){
                       res.deceased = data[1].deceased-data[0].deceased;
                       res.recovered = data[1].recovered-data[0].recovered;
                       flag=false;
-                      sendEmail('DATA : '+e.district , JSON.stringify(res));
+                      await sendEmail('DATA : '+e.district , JSON.stringify(res));
                   }
               }else{
                   flag=true;
@@ -50,7 +50,7 @@ function main(){
               }
               resolve(1);
             })
-        }));
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -62,7 +62,8 @@ function main(){
 }
 main();
 function sendEmail(Title,Body){
-    var transporter = nodemailer.createTransport({
+    return new Promise((res,rej)=>{
+      var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user: process.env.EMAIL,
@@ -81,5 +82,7 @@ function sendEmail(Title,Body){
         } else {
           console.log('Email sent: ' + info.response);
         }
+        res(true);
       });
+    })
 }
