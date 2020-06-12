@@ -14,7 +14,8 @@ let input_District = [
 
 let input_email = [
     'kevalnavadiya39@gmail.com',
-    'bhutbhutani39@gmail.com'
+    'bhutbhutani39@gmail.com',
+    'ketann09@gmail.com'
 ]
 
 let flag = true;
@@ -30,26 +31,23 @@ function main(){
         let today = new Date().toISOString().slice(0,10);
         let res={};
     
-        input_District.forEach(async e => {
-            await new Promise(async (resolve,reject)=>{
-              let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
-              delete data[0].date;
-              delete data[1].date;
-              if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
-                  if(flag){
-                      res.active = data[1].active-data[0].active;
-                      res.confirmed = data[1].confirmed-data[0].confirmed;
-                      res.deceased = data[1].deceased-data[0].deceased;
-                      res.recovered = data[1].recovered-data[0].recovered;
-                      flag=false;
-                      await sendEmail('DATA : '+e.district , JSON.stringify(res));
-                  }
-              }else{
-                  flag=true;
-                  console.log('same');
-              }
-              resolve(1);
-            })
+        input_District.forEach(e => {
+          let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
+          delete data[0].date;
+          delete data[1].date;
+          if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
+            if(flag){
+                res.active = data[1].active-data[0].active;
+                res.confirmed = data[1].confirmed-data[0].confirmed;
+                res.deceased = data[1].deceased-data[0].deceased;
+                res.recovered = data[1].recovered-data[0].recovered;
+                flag=false;
+                await sendEmail('DATA : '+e.district , JSON.stringify(res));
+            }
+          }else{
+              flag=true;
+              console.log('same');
+          }
         });
       })
       .catch(function (error) {
