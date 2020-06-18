@@ -19,47 +19,11 @@ let input_email = [
 ]
 
 let flag = true;
-console.log('started');
-
-function main(){
-    console.log('in main');
-    setTimeout(()=>{
-        console.log('Execution in setInterval');
-        axios.get('https://api.covid19india.org/districts_daily.json')
-      .then(async function (response) {
-        let yesterday = new Date(Date.now() - 864e5).toISOString().slice(0,10);
-        let today = new Date().toISOString().slice(0,10);
-        let res={};
-    
-        await Promise.all(input_District.forEach(async e => {
-            await new Promise((resolve,reject)=>{
-              let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
-              delete data[0].date;
-              delete data[1].date;
-              if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
-                  if(flag){
-                      res.active = data[1].active-data[0].active;
-                      res.confirmed = data[1].confirmed-data[0].confirmed;
-                      res.deceased = data[1].deceased-data[0].deceased;
-                      res.recovered = data[1].recovered-data[0].recovered;
-                      flag=false;
-                      sendEmail('DATA : '+e.district , JSON.stringify(res));
-                  }
-              }else{
-                  flag=true;
-                  console.log('same');
-              }
-              resolve(1);
-            })
-        }));
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {
-        main();
-      });
-    },5*1000);
+async function main(){
+  setTimeout(()=>{
+    console.log('over');
+    main();
+  },5000);
 }
 main();
 function sendEmail(Title,Body){
