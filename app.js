@@ -1,6 +1,5 @@
 const axios = require('axios');
 var nodemailer = require('nodemailer');
-console.log('kk:'+process.env.EMAIL);
 let input_District = [
     {
         state:'Gujarat',
@@ -21,7 +20,34 @@ let input_email = [
 let flag = true;
 async function main(){
   setTimeout(()=>{
-    console.log('over');
+    axios
+    .get('https://api.covid19india.org/districts_daily.json')
+    .then(async function (response) {
+      let yesterday = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+      let today = new Date().toISOString().slice(0,10);
+      let res={};
+      for(let e of input_District){
+        await new Promise((res,rej)=>{
+          let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
+            delete data[0].date;
+            delete data[1].date;
+            if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
+                if(flag){
+                    res.active = data[1].active-data[0].active;
+                    res.confirmed = data[1].confirmed-data[0].confirmed;
+                    res.deceased = data[1].deceased-data[0].deceased;
+                    res.recovered = data[1].recovered-data[0].recovered;
+                    flag=false;
+                    sendEmail('DATA : '+e.district , JSON.stringify(res));
+                }
+            }else{
+                flag=true;
+                console.log('same'+e.district);
+            }
+            res(1);
+        });
+      }
+    });
     main();
   },5000);
 }
