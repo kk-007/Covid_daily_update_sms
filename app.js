@@ -16,8 +16,10 @@ let input_email = [
     'bhutbhutani39@gmail.com',
     'ketann09@gmail.com'
 ]
-
-let flag = true;
+var flag={}
+for (let e of input_District){
+  flag[e.district] = true;
+}
 async function main(){
   setTimeout(()=>{
     axios
@@ -32,7 +34,7 @@ async function main(){
             delete data[0].date;
             delete data[1].date;
             if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
-                if(flag){
+                if(flag[e.district]){
                     res.active = data[1].active-data[0].active;
                     res.confirmed = data[1].confirmed-data[0].confirmed;
                     res.deceased = data[1].deceased-data[0].deceased;
@@ -41,7 +43,7 @@ async function main(){
                     sendEmail('DATA : '+e.district , JSON.stringify(res));
                 }
             }else{
-                flag=true;
+                flag[e.district]=true;
                 console.log('same'+e.district);
             }
             res(1);
