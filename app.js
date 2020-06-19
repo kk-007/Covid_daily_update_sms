@@ -8,13 +8,17 @@ let input_District = [
     {
         state:'Maharashtra',
         district:'Mumbai'
+    },
+    {
+      state:'Gujarat',
+      district:'Botad'
     }
 ];
 
 let input_email = [
     'kevalnavadiya39@gmail.com',
-    'bhutbhutani39@gmail.com',
-    'ketann09@gmail.com'
+    'ketann09@gmail.com',
+    'darshitakbari5799@gmail.com',
 ]
 var flag={}
 for (let e of input_District){
