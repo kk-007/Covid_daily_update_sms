@@ -33,6 +33,7 @@ async function main(){
           let data = response.data.districtsDaily[e.state][e.district].filter(e=>e.date===today || e.date===yesterday);
             delete data[0].date;
             delete data[1].date;
+            console.log(data[0],data[1]);
             if(JSON.stringify(data[0])!=JSON.stringify(data[1])){
                 if(flag[e.district]){
                     res.active = data[1].active-data[0].active;
@@ -40,6 +41,7 @@ async function main(){
                     res.deceased = data[1].deceased-data[0].deceased;
                     res.recovered = data[1].recovered-data[0].recovered;
                     flag=false;
+                    console.log('res',res);
                     sendEmail('DATA : '+e.district , JSON.stringify(res));
                 }
             }else{
@@ -51,7 +53,7 @@ async function main(){
       }
     });
     main();
-  },5000);
+  },10000);
 }
 main();
 function sendEmail(Title,Body){
