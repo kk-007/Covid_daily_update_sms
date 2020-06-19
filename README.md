@@ -12,6 +12,8 @@ npm install
 
 ## Usage
 
+don't forget to add the email id and password of your email in environment variable for sending the sms.
+
 ```nodejs
 node app.js
 ```
