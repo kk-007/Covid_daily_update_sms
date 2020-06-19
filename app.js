@@ -74,10 +74,9 @@ function sendEmail(Title,Body){
       };
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          console.log(error);
+          console.log('EMAIL-error',error);
         } else {
           console.log('Email sent: ' + info.response);
         }
-        res(true);
       });
 }
