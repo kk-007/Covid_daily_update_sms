@@ -27,7 +27,7 @@ for (let e of input_District){
 async function main(){
   setTimeout(()=>{
     axios
-    .get('https://api.covid19india.org/districts_daily.json')
+    .get(process.env.API)
     .then(async function (response) {
       let yesterday = new Date(Date.now() - 864e5).toISOString().slice(0,10);
       let today = new Date().toISOString().slice(0,10);
