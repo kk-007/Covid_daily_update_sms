@@ -26,6 +26,7 @@ for (let e of input_District){
 }
 async function main(){
   setTimeout(()=>{
+    console.log('flag',flag);
     axios
     .get(process.env.API)
     .then(async function (response) {
@@ -55,7 +56,7 @@ async function main(){
       }
     });
     main();
-  },10000);
+  },5000);
 }
 main();
 function sendEmail(Title,Body){
