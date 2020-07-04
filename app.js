@@ -44,7 +44,7 @@ async function main(){
                     ret.confirmed = data[1].confirmed-data[0].confirmed;
                     ret.deceased = data[1].deceased-data[0].deceased;
                     ret.recovered = data[1].recovered-data[0].recovered;
-                    flag=false;
+                    flag[e.district]=false;
                     sendEmail('DATA : '+e.district , JSON.stringify(ret));
                 }
             }else{
